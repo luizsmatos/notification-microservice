@@ -70,7 +70,7 @@ class Notification {
     return this.props.canceledAt;
   }
 
-  cancel() {
+  public cancel() {
     this.props.canceledAt = new Date();
   }
 
