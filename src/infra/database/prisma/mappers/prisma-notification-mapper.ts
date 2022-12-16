@@ -1,4 +1,6 @@
+import { Content } from '@app/entities/content';
 import { Notification } from '@app/entities/notification';
+import { Notification as PrismaNotification } from '@prisma/client';
 
 class PrismaNotificationMapper {
   static toPrisma(notification: Notification) {
@@ -10,6 +12,20 @@ class PrismaNotificationMapper {
       readAt: notification.readAt,
       createdAt: notification.createdAt,
     };
+  }
+
+  static toDomain(prismaNotificationData: PrismaNotification) {
+    return new Notification(
+      {
+        category: prismaNotificationData.category,
+        content: new Content(prismaNotificationData.content),
+        recipientId: prismaNotificationData.recipientId,
+        canceledAt: prismaNotificationData.canceledAt,
+        readAt: prismaNotificationData.readAt,
+        createdAt: prismaNotificationData.createdAt,
+      },
+      prismaNotificationData.id,
+    );
   }
 }
 
